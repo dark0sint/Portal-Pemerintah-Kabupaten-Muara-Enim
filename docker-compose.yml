@@ -1,0 +1,9 @@
+services:
+  portal:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:8000:8000"     # hanya bisa diakses nginx di host
+    volumes:
+      - ./instance:/srv/portal-muaraenim/instance
