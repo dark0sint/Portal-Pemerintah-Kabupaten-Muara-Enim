@@ -1,0 +1,20 @@
+# /etc/systemd/system/portal-muaraenim.service  (alternatif tanpa Docker)
+[Unit]
+Description=Portal Pemerintah Kabupaten Muara Enim
+After=network.target
+
+[Service]
+User=portal
+Group=portal
+WorkingDirectory=/srv/portal-muaraenim
+EnvironmentFile=/srv/portal-muaraenim/.env
+ExecStart=/srv/portal-muaraenim/venv/bin/gunicorn -c gunicorn.conf.py app:app
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/srv/portal-muaraenim/instance
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
