@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}JDIH{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Jaringan Dokumentasi dan Informasi Hukum (JDIH)</h1>
+<form class="filters" method="get">
+  <div><label for="q">Kata kunci atau nomor</label><input id="q" name="q" value="{{ f.q }}"></div>
+  <div><label for="j">Jenis</label><select id="j" name="jenis"><option value="">Semua</option>{% for j in jenis_list %}<option {% if f.jenis==j %}selected{% endif %}>{{ j }}</option>{% endfor %}</select></div>
+  <div><label for="t">Tahun</label><select id="t" name="tahun"><option value="">Semua</option>{% for t in tahun_list %}<option {% if f.tahun==t %}selected{% endif %}>{{ t }}</option>{% endfor %}</select></div>
+  <button class="btn" type="submit">Cari</button>
+</form>
+<p class="meta">{{ total }} produk hukum ditemukan.</p>
+<div class="scroll"><table class="tbl"><caption class="hp">Daftar produk hukum</caption>
+<thead><tr><th>Jenis</th><th>Nomor/Tahun</th><th>Tentang</th><th>Status</th><th>Berkas</th></tr></thead>
+<tbody>{% for r in rows %}<tr><td>{{ r.jenis }}</td><td>{{ r.nomor }}/{{ r.tahun }}</td><td>{{ r.judul }}</td><td>{{ r.status }}</td>
+<td>{% if r.url %}<a href="{{ r.url }}" rel="noopener" target="_blank">Unduh</a>{% else %}–{% endif %}</td></tr>
+{% else %}<tr><td colspan="5">Tidak ada hasil. Coba kata kunci lain.</td></tr>{% endfor %}</tbody></table></div>
+{% if pages > 1 %}<div class="pager">
+{% if page > 1 %}<a class="btn sm ghost" href="{{ url_for('jdih', q=f.q, jenis=f.jenis, tahun=f.tahun, hal=page-1) }}">Sebelumnya</a>{% endif %}
+<span>Halaman {{ page }} dari {{ pages }}</span>
+{% if page < pages %}<a class="btn sm ghost" href="{{ url_for('jdih', q=f.q, jenis=f.jenis, tahun=f.tahun, hal=page+1) }}">Berikutnya</a>{% endif %}</div>{% endif %}
+</div></section>{% endblock %}

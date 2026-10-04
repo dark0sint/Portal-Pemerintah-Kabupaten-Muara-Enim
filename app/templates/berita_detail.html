@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}{{ b.judul }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap"><h1>{{ b.judul }}</h1><p class="meta">{{ b.tanggal|tgl }}</p>{{ b.isi|paras }}<a href="{{ url_for('berita_list') }}">Kembali ke daftar berita</a></div></section>{% endblock %}

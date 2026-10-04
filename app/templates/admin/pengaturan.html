@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Pengaturan{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Pengaturan kontak</h1>{% include "admin/_nav.html" %}
+<form method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% for k, label in [('alamat','Alamat kantor'),('telepon','Telepon'),('email','Email resmi'),('jam_layanan','Jam layanan'),('whatsapp','WhatsApp (opsional)')] %}
+<label for="{{ k }}">{{ label }}</label><input id="{{ k }}" name="{{ k }}" value="{{ vals[k] }}" maxlength="300">{% endfor %}
+<p></p><button class="btn" type="submit">Simpan</button></form></div></section>{% endblock %}

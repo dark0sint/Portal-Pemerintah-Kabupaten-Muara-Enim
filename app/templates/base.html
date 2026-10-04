@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf" content="{{ csrf_token() }}">
+<meta name="description" content="Portal resmi {{ site }}: layanan publik online, pengaduan, JDIH, dan Satu Data.">
+<meta name="theme-color" content="#0E5A52">
+<title>{% block title %}{{ site }}{% endblock %}{% if self.title()|trim != site %} | {{ site }}{% endif %}</title>
+<link rel="icon" href="{{ url_for('static', filename='img/logo.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<a class="skip" href="#isi">Lompat ke konten utama</a>
+
+<div class="a11y" role="region" aria-label="Alat aksesibilitas">
+  <div class="wrap">
+    <strong>Aksesibilitas</strong>
+    <button type="button" id="a-min" aria-label="Perkecil teks">A−</button>
+    <button type="button" id="a-plus" aria-label="Perbesar teks">A+</button>
+    <button type="button" id="a-align" aria-pressed="false">Rata kanan</button>
+    <button type="button" id="a-dys" aria-pressed="false">Huruf disleksia</button>
+    <button type="button" id="a-hc" aria-pressed="false">Kontras tinggi</button>
+    <button type="button" id="a-read">Bacakan halaman</button>
+    <button type="button" id="a-stop">Hentikan suara</button>
+    <button type="button" id="a-reset">Atur ulang</button>
+  </div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="" width="46" height="46">
+      <span><b>{{ site }}</b><small>Portal layanan dan informasi publik</small></span>
+    </a>
+    <button class="btn sm ghost menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    <form class="sfm" action="{{ url_for('cari') }}" role="search">
+      <label for="q-top" class="hp">Cari</label>
+      <input id="q-top" name="q" type="search" placeholder="Cari layanan, aturan, data…" maxlength="100">
+      <button class="btn" type="submit">Cari</button>
+    </form>
+  </div>
+  <nav class="main" id="nav" aria-label="Menu utama">
+    <div class="wrap"><ul>
+      {% set p = request.path %}
+      <li><a href="{{ url_for('index') }}" {% if p=='/' %}aria-current="page"{% endif %}>Beranda</a></li>
+      <li><a href="{{ url_for('halaman', slug='profil') }}" {% if p.startswith('/halaman/profil') or p.startswith('/halaman/visi') or p.startswith('/halaman/struktur') or p.startswith('/halaman/pimpinan') %}aria-current="page"{% endif %}>Profil</a></li>
+      <li><a href="{{ url_for('layanan_list') }}" {% if p.startswith('/layanan') %}aria-current="page"{% endif %}>Layanan</a></li>
+      <li><a href="{{ url_for('pengaduan') }}" {% if p.startswith('/pengaduan') %}aria-current="page"{% endif %}>Pengaduan</a></li>
+      <li><a href="{{ url_for('lacak') }}" {% if p.startswith('/lacak') %}aria-current="page"{% endif %}>Lacak Tiket</a></li>
+      <li><a href="{{ url_for('jdih') }}" {% if p.startswith('/jdih') %}aria-current="page"{% endif %}>JDIH</a></li>
+      <li><a href="{{ url_for('satu_data') }}" {% if p.startswith('/satu-data') %}aria-current="page"{% endif %}>Satu Data</a></li>
+      <li><a href="{{ url_for('publikasi') }}" {% if p.startswith('/publikasi') %}aria-current="page"{% endif %}>Publikasi</a></li>
+      <li><a href="{{ url_for('berita_list') }}" {% if p.startswith('/berita') %}aria-current="page"{% endif %}>Berita</a></li>
+      <li><a href="{{ url_for('kontak') }}" {% if p.startswith('/kontak') %}aria-current="page"{% endif %}>Hubungi Kami</a></li>
+    </ul></div>
+  </nav>
+</header>
+<div class="strip" aria-hidden="true"></div>
+
+<main id="isi" tabindex="-1">
+  <div class="wrap">
+  {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% for cat, m in msgs %}<div class="flash {{ cat }}" role="{{ 'alert' if cat=='error' else 'status' }}">{{ m }}</div>{% endfor %}
+  {% endwith %}
+  </div>
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h2>{{ site }}</h2>
+        <p>{{ cfg('alamat') }}</p>
+        <p>Telepon: {{ cfg('telepon') }}<br>Email: {{ cfg('email') }}<br>{{ cfg('jam_layanan') }}</p>
+      </div>
+      <div>
+        <h2>Informasi</h2>
+        <ul>
+          <li><a href="{{ url_for('halaman', slug='syarat-ketentuan') }}">Syarat dan Ketentuan</a></li>
+          <li><a href="{{ url_for('halaman', slug='kebijakan-privasi') }}">Kebijakan Privasi</a></li>
+          <li><a href="{{ url_for('halaman', slug='aksesibilitas') }}">Pernyataan Aksesibilitas</a></li>
+          <li><a href="{{ url_for('kontak') }}">Hubungi Kami</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Layanan cepat</h2>
+        <ul>
+          <li><a href="{{ url_for('pengaduan') }}">Kirim pengaduan</a></li>
+          <li><a href="{{ url_for('lacak') }}">Lacak tiket</a></li>
+          <li><a href="{{ url_for('jdih') }}">Cari produk hukum</a></li>
+          <li><a href="{{ url_for('admin_login') }}">Masuk petugas</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="small">© {{ year }} {{ site }}. Alamat resmi portal ini berakhiran <b>.go.id</b>. Waspadai situs tiruan yang meminta data atau pembayaran di luar domain resmi.</p>
+  </div>
+</footer>
+
+<button class="btn" id="chat-btn" type="button" aria-expanded="false" aria-controls="chat">Tanya Asisten</button>
+<section id="chat" aria-label="Asisten portal">
+  <header><span>Asisten Portal</span><button type="button" id="chat-x" class="btn sm ghost" aria-label="Tutup asisten">Tutup</button></header>
+  <div id="chat-log" role="log" aria-live="polite"></div>
+  <form id="chat-form">
+    <label for="chat-in" class="hp">Pertanyaan Anda</label>
+    <input id="chat-in" maxlength="300" autocomplete="off" placeholder="Ketik pertanyaan…">
+    <button class="btn sm" type="submit">Kirim</button>
+  </form>
+</section>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

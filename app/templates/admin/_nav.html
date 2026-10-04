@@ -1,0 +1,9 @@
+<div class="admin-nav">
+  <a class="btn sm ghost" href="{{ url_for('admin_home') }}">Ringkasan</a>
+  <a class="btn sm ghost" href="{{ url_for('admin_aduan') }}">Pengaduan</a>
+  <a class="btn sm ghost" href="{{ url_for('admin_perizinan') }}">Permohonan layanan</a>
+  {% for k, v in admin_tables.items() %}<a class="btn sm ghost" href="{{ url_for('admin_list', t=k) }}">{{ v.label }}</a>{% endfor %}
+  <a class="btn sm ghost" href="{{ url_for('admin_pengaturan') }}">Pengaturan</a>
+  <a class="btn sm ghost" href="{{ url_for('admin_sandi') }}">Ganti sandi</a>
+  <form method="post" action="{{ url_for('admin_logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn sm danger" type="submit">Keluar</button></form>
+</div>

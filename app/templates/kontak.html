@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Hubungi Kami{% endblock %}
+{% block content %}<section class="blk"><div class="wrap grid2">
+<div><h1>Hubungi kami</h1>
+<p><b>Alamat</b><br>{{ cfg('alamat') }}</p>
+<p><b>Telepon</b><br>{{ cfg('telepon') }}</p>
+<p><b>Email</b><br>{{ cfg('email') }}</p>
+{% if cfg('whatsapp') %}<p><b>WhatsApp</b><br>{{ cfg('whatsapp') }}</p>{% endif %}
+<p><b>Jam layanan</b><br>{{ cfg('jam_layanan') }}</p>
+<p>Untuk masalah layanan, <a href="{{ url_for('pengaduan') }}">kirim pengaduan</a> agar Anda mendapat nomor tiket. Untuk pertanyaan cepat, pakai tombol <b>Tanya Asisten</b>.</p>
+<p>Permintaan akses, perbaikan, atau penghapusan data pribadi sesuai UU PDP: sebutkan nomor tiket Anda saat menghubungi kami.</p></div>
+<div class="panel"><h2>Aduan konten negatif</h2><p>Menemukan konten judi, penipuan, atau yang membahayakan anak di ruang digital Kabupaten Muara Enim? Laporkan melalui formulir pengaduan.</p><a class="btn" href="{{ url_for('pengaduan') }}">Laporkan konten</a></div>
+</div></section>{% endblock %}

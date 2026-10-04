@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Kesalahan {{ kode }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap"><h1>{{ kode }}</h1><p>{{ pesan }}</p><a class="btn" href="{{ url_for('index') }}">Kembali ke beranda</a></div></section>{% endblock %}

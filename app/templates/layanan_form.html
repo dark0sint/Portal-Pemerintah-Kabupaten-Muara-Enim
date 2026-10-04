@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Ajukan {{ l.nama }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>{{ l.nama }}</h1><p>{{ l.deskripsi }}</p>
+<details><summary>Persyaratan</summary>{{ l.persyaratan|paras }}</details>
+<form method="post" enctype="multipart/form-data" novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="hp" aria-hidden="true"><label>Jangan diisi<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label for="nama">Nama lengkap sesuai KTP</label><input id="nama" name="nama" required maxlength="120" value="{{ f.get('nama','') }}">
+  <label for="nik">NIK (16 digit)</label><input id="nik" name="nik" inputmode="numeric" pattern="\d{16}" maxlength="16" required value="{{ f.get('nik','') }}">
+  <p class="hint">NIK dipakai untuk verifikasi dan ditampilkan tersamar kepada petugas.</p>
+  <label for="kontak">Nomor HP atau email aktif</label><input id="kontak" name="kontak" required maxlength="120" value="{{ f.get('kontak','') }}">
+  <label for="alamat">Alamat</label><input id="alamat" name="alamat" required maxlength="300" value="{{ f.get('alamat','') }}">
+  <label for="ket">Keterangan tambahan</label><textarea id="ket" name="keterangan" maxlength="1500">{{ f.get('keterangan','') }}</textarea>
+  <label for="berkas">Berkas pendukung (PDF/JPG/PNG, maks. 5 MB)</label><input id="berkas" type="file" name="berkas" accept=".pdf,.jpg,.jpeg,.png">
+  <label class="chk"><input type="checkbox" name="setuju" value="1"><span>Saya menyatakan data benar dan menyetujui <a href="{{ url_for('halaman', slug='kebijakan-privasi') }}">Kebijakan Privasi</a>. Saya berusia 18 tahun ke atas atau mewakili sebagai orang tua/wali.</span></label>
+  <p></p><button class="btn" type="submit">Kirim permohonan</button>
+</form></div></section>{% endblock %}

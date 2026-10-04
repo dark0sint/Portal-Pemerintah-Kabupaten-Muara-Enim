@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Layanan Online{% endblock %}
+{% block content %}<section class="blk"><div class="wrap"><h1>Layanan perizinan dan administrasi online</h1>
+<p>Ajukan dari rumah. Siapkan KTP dan berkas pendukung dalam bentuk PDF, JPG, atau PNG (maksimal 5 MB).</p>
+<ul class="rows">{% for l in items %}
+<li><div><h2>{{ l.nama }}</h2><p>{{ l.deskripsi }}</p><p class="meta">Estimasi: {{ l.estimasi }} · {{ l.instansi }}</p>
+<details><summary>Persyaratan</summary>{{ l.persyaratan|paras }}</details></div>
+<a class="btn" href="{{ url_for('layanan_form', i=l.id) }}">Ajukan</a></li>{% endfor %}</ul>
+</div></section>{% endblock %}

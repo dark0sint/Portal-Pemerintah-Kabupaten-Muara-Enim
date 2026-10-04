@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Satu Data{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Satu Data Kabupaten Muara Enim</h1>
+<p>Data sektoral terbuka untuk transparansi. Setiap dataset dapat dilihat sebagai grafik dan diunduh.</p>
+<ul class="rows">{% for d in items %}
+<li><div><h2><a href="{{ url_for('satu_data_detail', i=d.id) }}">{{ d.judul }}</a></h2><p class="meta">{{ d.sektor }} · Tahun {{ d.tahun }} · {{ d.n }} baris</p></div>
+<a class="btn sm" href="{{ url_for('satu_data_detail', i=d.id) }}">Lihat</a></li>
+{% else %}<li>Belum ada dataset.</li>{% endfor %}</ul>
+</div></section>{% endblock %}

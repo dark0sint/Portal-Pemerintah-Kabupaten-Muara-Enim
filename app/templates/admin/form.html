@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ c.label }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>{{ 'Ubah' if rid else 'Tambah' }}: {{ c.label }}</h1>
+<form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% for name, label, kind in c.fields %}
+<label for="f-{{ name }}">{{ label }}</label>
+{% if kind in ('area','rows') %}<textarea id="f-{{ name }}" name="{{ name }}">{{ row.get(name,'') or '' }}</textarea>
+{% elif kind == 'date' %}<input id="f-{{ name }}" type="date" name="{{ name }}" value="{{ row.get(name,'') or '' }}">
+{% elif kind == 'int' %}<input id="f-{{ name }}" type="number" name="{{ name }}" value="{{ row.get(name,'') if row.get(name) is not none else '' }}">
+{% else %}<input id="f-{{ name }}" name="{{ name }}" value="{{ row.get(name,'') or '' }}">{% endif %}
+{% endfor %}
+<p></p><button class="btn" type="submit">Simpan</button> <a class="btn ghost" href="{{ url_for('admin_list', t=t) }}">Batal</a>
+</form></div></section>{% endblock %}

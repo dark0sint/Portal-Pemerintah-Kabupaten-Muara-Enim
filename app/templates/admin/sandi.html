@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Ganti Sandi{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Ganti kata sandi</h1>{% include "admin/_nav.html" %}
+<form method="post" autocomplete="off"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="l">Kata sandi lama</label><input id="l" type="password" name="lama" required autocomplete="current-password">
+<label for="b">Kata sandi baru</label><input id="b" type="password" name="baru" required minlength="12" autocomplete="new-password">
+<p class="hint">Minimal 12 karakter, memuat huruf dan angka.</p>
+<p></p><button class="btn" type="submit">Ganti</button></form></div></section>{% endblock %}

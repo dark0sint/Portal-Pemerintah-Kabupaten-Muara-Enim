@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Pengaduan{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Sampaikan pengaduan</h1>
+<p>Ceritakan masalahnya dengan jelas: apa, di mana, dan kapan. Anda boleh memakai nama samaran, tetapi kontak diperlukan agar kami bisa menghubungi Anda.</p>
+<form method="post" novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="hp" aria-hidden="true"><label>Jangan diisi<input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label for="nama">Nama (opsional)</label><input id="nama" name="nama" maxlength="120" value="{{ f.get('nama','') }}">
+  <label for="kontak">Nomor HP atau email</label><input id="kontak" name="kontak" maxlength="120" value="{{ f.get('kontak','') }}">
+  <label for="kat">Kategori</label>
+  <select id="kat" name="kategori" required>{% for k in kategori %}<option {% if f.get('kategori')==k %}selected{% endif %}>{{ k }}</option>{% endfor %}</select>
+  <p class="hint">Untuk melaporkan konten negatif (judi, penipuan, kekerasan, dan sejenisnya), pilih "Konten negatif di ruang digital" dan sebutkan tautan atau akunnya tanpa menyalin isinya.</p>
+  <label for="isi">Uraian pengaduan</label><textarea id="isi" name="isi" required minlength="20" maxlength="3000">{{ f.get('isi','') }}</textarea>
+  <label class="chk"><input type="checkbox" name="setuju" value="1"><span>Saya menyetujui <a href="{{ url_for('halaman', slug='kebijakan-privasi') }}">Kebijakan Privasi</a> dan <a href="{{ url_for('halaman', slug='syarat-ketentuan') }}">Syarat dan Ketentuan</a>.</span></label>
+  <p></p><button class="btn" type="submit">Kirim pengaduan</button>
+</form></div></section>{% endblock %}

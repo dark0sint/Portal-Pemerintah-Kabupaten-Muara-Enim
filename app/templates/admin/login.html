@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Masuk Petugas{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Masuk petugas</h1>
+<p>Khusus petugas Pemerintah Kabupaten Muara Enim. Setelah kata sandi, Anda akan diminta kode OTP dari aplikasi autentikator.</p>
+<form method="post" autocomplete="off">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="u">Nama pengguna</label><input id="u" name="username" required autocomplete="username">
+  <label for="p">Kata sandi</label><input id="p" name="password" type="password" required autocomplete="current-password">
+  <p></p><button class="btn" type="submit">Lanjut</button>
+</form></div></section>{% endblock %}

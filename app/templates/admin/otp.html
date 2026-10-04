@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Verifikasi OTP{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Verifikasi dua langkah</h1>
+{% if setup %}
+<p>Akun Anda belum memakai OTP. Tambahkan akun ke aplikasi autentikator (Google Authenticator, Microsoft Authenticator, Aegis, dan sejenisnya) dengan <b>memasukkan kunci ini secara manual</b> (jenis: berbasis waktu):</p>
+<p class="ticket">{{ secret }}</p>
+<p class="hint">Di ponsel, Anda juga bisa mengetuk <a href="{{ uri }}">tautan otpauth</a> agar aplikasi autentikator terbuka otomatis. Setelah itu, masukkan kode 6 digit yang muncul.</p>
+{% else %}<p>Masukkan kode 6 digit dari aplikasi autentikator Anda.</p>{% endif %}
+<form method="post" autocomplete="off">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="k">Kode OTP</label><input id="k" name="kode" inputmode="numeric" pattern="\d{6}" maxlength="6" required autofocus autocomplete="one-time-code">
+  <p></p><button class="btn" type="submit">{{ 'Aktifkan dan masuk' if setup else 'Masuk' }}</button>
+</form></div></section>{% endblock %}

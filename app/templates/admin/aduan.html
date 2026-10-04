@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Pengaduan (Petugas){% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Pengaduan masuk</h1>{% include "admin/_nav.html" %}
+{% for r in rows %}<div class="panel plain mt"><h3>{{ r.tiket }} <span class="tag">{{ r.status }}</span></h3>
+<p class="meta">{{ r.dibuat }} · {{ r.kategori }} · {{ r.nama }} · {{ r.kontak or 'tanpa kontak' }}</p>{{ r.isi|paras }}
+<form method="post" action="{{ url_for('admin_aduan_update', i=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="s{{ r.id }}">Status</label><select id="s{{ r.id }}" name="status">{% for s in status %}<option {% if s==r.status %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+<label for="t{{ r.id }}">Tanggapan untuk warga</label><textarea id="t{{ r.id }}" name="tanggapan" maxlength="1500">{{ r.tanggapan or '' }}</textarea>
+<p></p><button class="btn sm" type="submit">Simpan</button></form></div>
+{% else %}<p>Belum ada pengaduan.</p>{% endfor %}
+</div></section>{% endblock %}

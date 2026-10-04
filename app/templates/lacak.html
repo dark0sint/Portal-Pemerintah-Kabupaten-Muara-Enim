@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Lacak Tiket{% endblock %}
+{% block content %}<section class="blk"><div class="wrap form-narrow">
+<h1>Lacak tiket</h1>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="tk">Nomor tiket</label><input id="tk" name="tiket" required maxlength="40" placeholder="ADU-260101-AB12CD">
+  <p></p><button class="btn" type="submit">Cek status</button>
+</form>
+{% if hasil == "tidak ada" %}<div class="flash error" role="alert">Tiket tidak ditemukan. Periksa penulisan nomor tiket.</div>
+{% elif hasil %}
+<div class="panel mt">
+  <h2>{{ hasil.tiket }}</h2>
+  <p><b>Jenis:</b> {{ hasil.jenis }}<br><b>Status:</b> <span class="tag">{{ hasil.status }}</span><br><b>Diajukan:</b> {{ hasil.dibuat|tgl }}</p>
+  {% if hasil.catatan %}<p><b>Tanggapan petugas:</b></p>{{ hasil.catatan|paras }}{% endif %}
+</div>{% endif %}
+</div></section>{% endblock %}

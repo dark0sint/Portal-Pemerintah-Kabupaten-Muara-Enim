@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ d.judul }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>{{ d.judul }}</h1>
+<p class="meta">{{ d.sektor }} · Tahun {{ d.tahun }} · Satuan: {{ d.satuan }}</p>
+{{ d.deskripsi|paras }}
+<svg id="chart" role="img" aria-label="Grafik batang {{ d.judul }}" data-rows="{{ chart }}" data-unit="{{ d.satuan }}"></svg>
+<p><a class="btn" href="{{ url_for('satu_data_csv', i=d.id) }}">Unduh CSV</a> <a class="btn ghost" href="{{ url_for('satu_data_json', i=d.id) }}">Unduh JSON</a></p>
+<h2>Tabel data</h2>
+<div class="scroll"><table class="tbl"><thead><tr><th>Keterangan</th><th>Nilai ({{ d.satuan }})</th></tr></thead>
+<tbody>{% for r in rows %}<tr><td>{{ r.label }}</td><td>{{ '{:,.2f}'.format(r.nilai).rstrip('0').rstrip('.') }}</td></tr>{% endfor %}</tbody></table></div>
+</div></section>{% endblock %}

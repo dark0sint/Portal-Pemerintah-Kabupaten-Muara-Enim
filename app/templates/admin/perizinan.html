@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Permohonan (Petugas){% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Permohonan layanan</h1>{% include "admin/_nav.html" %}
+{% for r in rows %}<div class="panel plain mt"><h3>{{ r.tiket }} · {{ r.layanan }} <span class="tag">{{ r.status }}</span></h3>
+<p class="meta">{{ r.dibuat }} · {{ r.nama }} · NIK {{ r.nik|mask_nik }} · {{ r.kontak }}<br>{{ r.alamat }}</p>{{ r.keterangan|paras }}
+{% if r.berkas %}<p><a href="{{ url_for('admin_berkas', i=r.id) }}">Unduh berkas</a></p>{% endif %}
+<form method="post" action="{{ url_for('admin_perizinan_update', i=r.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<label for="s{{ r.id }}">Status</label><select id="s{{ r.id }}" name="status">{% for s in status %}<option {% if s==r.status %}selected{% endif %}>{{ s }}</option>{% endfor %}</select>
+<label for="c{{ r.id }}">Catatan untuk pemohon</label><textarea id="c{{ r.id }}" name="catatan" maxlength="1500">{{ r.catatan or '' }}</textarea>
+<p></p><button class="btn sm" type="submit">Simpan</button></form></div>
+{% else %}<p>Belum ada permohonan.</p>{% endfor %}
+</div></section>{% endblock %}

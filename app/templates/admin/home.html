@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Panel Petugas{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Panel petugas</h1>
+{% include "admin/_nav.html" %}
+<div class="grid2"><div class="panel plain"><h2>{{ n_aduan }}</h2><p>pengaduan baru menunggu ditanggapi.</p><a class="btn sm" href="{{ url_for('admin_aduan') }}">Buka pengaduan</a></div>
+<div class="panel plain"><h2>{{ n_izin }}</h2><p>permohonan layanan baru menunggu diproses.</p><a class="btn sm" href="{{ url_for('admin_perizinan') }}">Buka permohonan</a></div></div>
+<p class="notice mt">Teks bertanda [Admin: …] di halaman Profil dan Kebijakan masih contoh. Ganti dengan isi resmi lewat menu "Halaman Profil dan Kebijakan". Isi juga alamat, telepon, dan email di Pengaturan.</p>
+</div></section>{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Berita{% endblock %}
+{% block content %}<section class="blk"><div class="wrap"><h1>Berita</h1>
+<ul class="rows">{% for b in items %}<li><div><h2><a href="{{ url_for('berita_detail', i=b.id) }}">{{ b.judul }}</a></h2><p class="meta">{{ b.tanggal|tgl }}</p><p>{{ b.ringkasan }}</p></div></li>{% else %}<li>Belum ada berita.</li>{% endfor %}</ul>
+</div></section>{% endblock %}

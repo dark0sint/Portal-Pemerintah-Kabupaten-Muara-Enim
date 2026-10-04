@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Publikasi{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Publikasi program kerja, anggaran, dan kinerja</h1>
+<p class="admin-nav"><a class="btn sm {{ '' if not jenis else 'ghost' }}" href="{{ url_for('publikasi') }}">Semua</a>
+{% for j in jenis_list %}<a class="btn sm {{ '' if jenis==j else 'ghost' }}" href="{{ url_for('publikasi', jenis=j) }}">{{ j }}</a>{% endfor %}</p>
+<ul class="rows">{% for r in rows %}
+<li><div><h2>{{ r.judul }}</h2><p class="meta">{{ r.jenis }} · {{ r.tahun }}</p><p>{{ r.deskripsi }}</p></div>
+{% if r.url %}<a class="btn sm" href="{{ r.url }}" target="_blank" rel="noopener">Buka dokumen</a>{% else %}<span class="tag">Dokumen belum diunggah</span>{% endif %}</li>
+{% else %}<li>Belum ada publikasi.</li>{% endfor %}</ul>
+</div></section>{% endblock %}

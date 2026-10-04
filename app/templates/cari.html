@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Hasil pencarian{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>Hasil pencarian</h1>
+<form action="{{ url_for('cari') }}" class="filters" role="search"><div><label for="qq">Kata kunci</label><input id="qq" name="q" value="{{ kw }}"></div><span></span><span></span><button class="btn">Cari</button></form>
+{% if kw|length < 2 %}<p>Ketik minimal 2 huruf.</p>
+{% elif not res %}<p>Tidak ada hasil untuk "{{ kw }}". Coba kata lain, atau tanyakan ke Asisten.</p>
+{% else %}{% for grup, items in res.items() %}<h2>{{ grup }}</h2>
+<ul class="rows">{% for judul, link, ket in items %}<li><div><h3><a href="{{ link }}">{{ judul }}</a></h3>{% if ket %}<p>{{ ket }}</p>{% endif %}</div></li>{% endfor %}</ul>{% endfor %}{% endif %}
+</div></section>{% endblock %}

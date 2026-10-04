@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ c.label }}{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>{{ c.label }}</h1>{% include "admin/_nav.html" %}
+{% if not c.noadd %}<p><a class="btn" href="{{ url_for('admin_form', t=t) }}">Tambah baru</a></p>{% endif %}
+<div class="scroll"><table class="tbl"><thead><tr>{% for col in c.cols %}<th>{{ col }}</th>{% endfor %}<th>Aksi</th></tr></thead><tbody>
+{% for r in rows %}<tr>{% for col in c.cols %}<td>{{ (r[col]|string)[:90] }}</td>{% endfor %}
+<td><a class="btn sm ghost" href="{{ url_for('admin_form', t=t, rid=r[pk]) }}">Ubah</a>
+{% if not c.noadd %}<form method="post" action="{{ url_for('admin_delete', t=t, rid=r[pk]) }}" data-confirm="Hapus data ini?" class="inl"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn sm danger" type="submit">Hapus</button></form>{% endif %}</td></tr>
+{% else %}<tr><td colspan="{{ c.cols|length + 1 }}">Belum ada data.</td></tr>{% endfor %}</tbody></table></div>
+</div></section>{% endblock %}

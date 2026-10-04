@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ site }}{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="wrap">
+    <h1>Urus layanan pemerintah daerah tanpa antre.</h1>
+    <p>Ajukan layanan, kirim pengaduan, dan cari aturan serta data Kabupaten Muara Enim dari ponsel atau komputer.</p>
+    <form action="{{ url_for('cari') }}" role="search">
+      <label for="q-hero" class="hp">Cari di portal</label>
+      <input id="q-hero" name="q" type="search" placeholder="Contoh: surat keterangan usaha" maxlength="100">
+      <button class="btn" type="submit">Cari</button>
+    </form>
+    <ul class="quick">
+      <li><a href="{{ url_for('layanan_list') }}">Ajukan layanan</a></li>
+      <li><a href="{{ url_for('pengaduan') }}">Kirim pengaduan</a></li>
+      <li><a href="{{ url_for('lacak') }}">Lacak tiket</a></li>
+      <li><a href="{{ url_for('jdih') }}">Cari produk hukum</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="blk"><div class="wrap grid2">
+  <div>
+    <h2>Layanan online</h2>
+    <ul class="rows">
+      {% for l in layanan %}
+      <li><div><h3>{{ l.nama }}</h3><p>{{ l.deskripsi }}</p></div><a class="btn sm" href="{{ url_for('layanan_form', i=l.id) }}">Ajukan</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <div class="panel">
+      <h2>Punya keluhan?</h2>
+      <p>Sampaikan pengaduan Anda. Anda akan mendapat nomor tiket untuk memantau tindak lanjutnya.</p>
+      <a class="btn" href="{{ url_for('pengaduan') }}">Tulis pengaduan</a>
+    </div>
+    <div class="panel plain" >
+      <h2>Cek status tiket</h2>
+      <form action="{{ url_for('lacak') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="tk">Nomor tiket</label>
+        <input id="tk" name="tiket" placeholder="ADU-… atau IZN-…" required maxlength="40">
+        <p></p><button class="btn" type="submit">Lacak</button>
+      </form>
+    </div>
+  </div>
+</div></section>
+
+<section class="blk"><div class="wrap grid2">
+  <div>
+    <h2>Produk hukum terbaru</h2>
+    <ul class="rows">
+      {% for r in jdih %}
+      <li><div><h3>{{ r.jenis }} No. {{ r.nomor }} Tahun {{ r.tahun }}</h3><p>{{ r.judul }}</p></div><span class="tag">{{ r.status }}</span></li>
+      {% else %}<li>Belum ada data.</li>{% endfor %}
+    </ul>
+    <p><a href="{{ url_for('jdih') }}">Lihat semua produk hukum</a></p>
+  </div>
+  <div>
+    <h2>Berita</h2>
+    <ul class="rows">
+      {% for b in berita %}
+      <li><div><h3><a href="{{ url_for('berita_detail', i=b.id) }}">{{ b.judul }}</a></h3><p class="meta">{{ b.tanggal|tgl }}</p><p>{{ b.ringkasan }}</p></div></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div></section>
+{% endblock %}

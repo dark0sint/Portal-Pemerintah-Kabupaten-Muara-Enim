@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Tiket diterima{% endblock %}
+{% block content %}<section class="blk"><div class="wrap">
+<h1>{{ jenis }} Anda sudah diterima</h1>
+<p>Simpan nomor tiket ini. Nomor ini satu-satunya kunci untuk memantau status Anda.</p>
+<p class="ticket">{{ tiket }}</p>
+<p><a class="btn" href="{{ url_for('lacak') }}">Lacak tiket</a> <a class="btn ghost" href="{{ url_for('index') }}">Ke beranda</a></p>
+</div></section>{% endblock %}
